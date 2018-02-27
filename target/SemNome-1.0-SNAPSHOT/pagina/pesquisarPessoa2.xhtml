@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+        
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Pesquisar Pessoa</title>
+            </f:facet>
+        </h:head>
+        <h:body>
+            <h:form id="formPesquisarPessoa">
+                <p:messages id="msg" showDetail="true" autoUpdate="true" closable="true" />
+                <p:dialog header="Pessoa" widgetVar="mostrar" visible="true" >
+                    <p:panelGrid columns="2" >
+                    <h:outputLabel value="Nome:"/>
+                    <p:inputText id="nome" size="60" value="#{PessoaBean.pessoa.nome}" />
+                    
+                    <h:outputLabel value="C.P.F.:"/>
+                    <p:inputMask id="cpf" mask="999.999.999-99" size="14"  value="#{PessoaBean.pessoa.cpf}" />
+                    
+                    <h:outputLabel value="Idade:"/>
+                    <p:inputText id="idade"  size="3" value="#{PessoaBean.pessoa.idade}" />
+                    
+                    <h:outputLabel value="Sexo:"/>
+                    <p:selectOneMenu id="sexo" value="#{PessoaBean.pessoa.sexo}" >
+                        <f:selectItem itemLabel="Masculino" itemValue="M" />
+                        <f:selectItem itemLabel="Feminino" itemValue="F" />
+                        <f:selectItem itemLabel="Outros" itemValue="O" />
+                    </p:selectOneMenu>
+                    
+                    
+                    <h:outputLabel />
+                    <p:commandButton id="pesquisar" icon="ui-icon-search" value="Pesquisar" action="#{PessoaBean.pesquisar}" />
+                    
+                                        
+                    </p:panelGrid>   
+                    <p:panelGrid columns ="1" style="width:70%; align-items:center">
+
+                        <p:dataTable value="#{PessoaBean.listaPessoa}" var="pessoa" >
+                            <p:column headerText="C.P.F">
+                                <h:outputText value="#{pessoa.cpf}" />
+                            </p:column>
+
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{pessoa.nome}" />
+                            </p:column>
+
+                            <p:column headerText="Sexo">
+                                <h:outputText value="#{pessoa.sexo}" />
+                            </p:column>
+
+                            <p:column headerText="Idade">
+                                <h:outputText value="#{pessoa.idade}" />
+                           
+                            </p:column>   
+                            
+                            
+                    <p:column headerText="Editar">
+                        <h:commandButton value="Editar" styleClass="fs-button-portfolio" action ="#{PessoaBean.editar}">
+                            <f:setPropertyActionListener target="#{PessoaBean.selecCPF}" value="#{pessoa.cpf}"/>
+                        </h:commandButton>
+                    </p:column> 
+                    <p:column headerText="Remover">
+                        <h:commandButton value="Delete" styleClass ="fs-button-portfolio" action="#{PessoaBean.deletar}">
+                            <f:setPropertyActionListener target="#{PessoaBean.selecCPF}" value="#{pessoa.cpf}"/>
+                        </h:commandButton>
+                        
+                    </p:column>
+                        </p:dataTable>
+                    </p:panelGrid>
+                </p:dialog>
+            </h:form>
+            
+        </h:body>
+    </f:view>
+        
+</ui:composition>

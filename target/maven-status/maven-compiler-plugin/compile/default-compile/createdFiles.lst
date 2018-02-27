@@ -1,0 +1,10 @@
+com\br\semnome\dao\EnderecoDAOImpl.class
+com\br\semnome\entidade\Conta.class
+com\br\semnome\dao\EnderecoDAO.class
+com\br\semnome\dao\PessoaDAO.class
+com\br\semnome\entidade\Pessoa.class
+com\br\semnome\dao\PessoaDAOImpl.class
+com\br\semnome\entidade\Endereco.class
+com\br\semnome\dao\HibernateUtil.class
+com\br\semnome\entidade\Endereco_.class
+com\br\semnome\controle\PessoaBean.class
