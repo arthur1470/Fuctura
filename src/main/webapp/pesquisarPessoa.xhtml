@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Pesquisa de Pessoas</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<h:body>
+		<h:form id="frm" prependId="false">
+			<h:inputHidden id="excluir"></h:inputHidden>
+			<p:messages id="msg" showDetail="true" closable="true" style="width: 30%" />				
+			<p:panelGrid columns="2" styleClass="grid" columnClasses="labels, campos">								
+				<f:facet name="header">
+					Pesquisar Pessoa
+				</f:facet>
+							
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText value="#{pessoaBean.pessoa.nome}" id="nome" size="18" />
+				
+				<p:outputLabel value="CPF:" for="cpf" />
+				<p:inputMask mask="999.999.999-99" value="#{pessoaBean.pessoa.cpf}" id="cpf"  size="14"/>
+				
+				<p:outputLabel value="Idade:" for="idade" />
+				<p:inputText value="#{pessoaBean.pessoa.idade}" id="idade" size="3" />
+
+				<p:outputLabel value="Sexo:" />
+				<p:selectOneMenu value="#{pessoaBean.pessoa.sexo}">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione" />					
+					<f:selectItem itemLabel="Masculino" itemValue="M" />					
+					<f:selectItem itemLabel="Feminino" itemValue="F" />					
+				</p:selectOneMenu>
+					
+				<p:outputLabel value="" />
+							
+				<p:commandButton value="Buscar" action="#{pessoaBean.pesquisar}" icon="ui-icon-search" update="table" />							
+				
+			</p:panelGrid>
+			
+			<p:dataTable value="#{pessoaBean.pessoas}" var="p" id="table">
+				<p:column headerText="CPF" sortBy="#{p.cpf}">
+					<h:outputText value="#{p.cpf}" />
+				</p:column>
+				<p:column headerText="Nome" sortBy="#{p.nome}">
+					<h:outputText value="#{p.nome}" />
+				</p:column>
+				<p:column headerText="Sexo" sortBy="#{p.sexo}">
+					<h:outputText value="#{p.sexo}" />
+				</p:column>
+				<p:column headerText="Idade" sortBy="#{p.idade}">								
+					<h:outputText value="#{p.idade}" />
+				</p:column>
+				<p:column headerText="">
+					<p:commandButton onstart="PF('bloquear').show()" icon="ui-icon-pencil" action="#{pessoaBean.prepararEditar(p)}" 
+						update="dialogFrm" oncomplete="PF('editar').show(); PF('bloquear').hide()" />
+					
+					<p:commandButton onstart="PF('bloquear').show()" icon="ui-icon-trash" id="excluir" 
+						action="#{pessoaBean.remover(p)}" update="table" oncomplete="PF('bloquear').hide()" />
+				</p:column>							
+			</p:dataTable>
+			
+			<p:blockUI widgetVar="bloquear" block="frm">
+				<h:graphicImage library="img" name="loading.gif" />
+			</p:blockUI>
+		</h:form>
+		
+		
+		<p:dialog widgetVar="editar" closable="true" resizable="false" responsive="true" draggable="true" header="Editar Pessoa"
+			id="dialogEditar" showEffect="slide" hideEffect="slide">
+			<h:form id="dialogFrm">
+				<p:panelGrid columns="2">													
+								
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText value="#{pessoaBean.pessoaEditar.nome}" id="nome" size="15" />
+					
+					<p:outputLabel value="CPF:" for="cpf" />
+					<p:inputMask mask="999.999.999-99" value="#{pessoaBean.pessoaEditar.cpf}" id="cpf" size="14"/>
+					
+					<p:outputLabel value="Idade:" for="idade" />
+					<p:inputText value="#{pessoaBean.pessoaEditar.idade}" id="idade" size="3" />
+	
+					<p:outputLabel value="Sexo:" />
+					<p:selectOneMenu value="#{pessoaBean.pessoaEditar.sexo}">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />					
+						<f:selectItem itemLabel="Masculino" itemValue="M" />					
+						<f:selectItem itemLabel="Feminino" itemValue="F" />					
+					</p:selectOneMenu>
+						
+					<p:outputLabel value="" />
+								
+					<p:commandButton value="Editar" action="#{pessoaBean.editar}" update=":frm:table" icon="ui-icon-pencil" 
+						oncomplete="PF('editar').hide()"/>							
+					
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+	</h:body>
+</html>
