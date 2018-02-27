@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<title>Número fibonacci?</title>
+	</h:head>
+	<h:body>		
+		<h:form>
+			<p:dialog header="Número Fibonacci" widgetVar="numeroFib" visible="true" resizable="false" modal="true"
+				 responsive="true" draggable="false" closable="false">			
+				<p:panelGrid columns="1" style="text-align: center;">
+					<p:messages id="mensagens" showDetail="true" showSummary="false" />
+					
+					<p:outputLabel value="Digite o número" for="numero" />
+					<p:inputText id="numero" value="#{numeroBean.numero}" />
+					
+					<p:commandButton value="Verificar" action="#{numeroBean.testar}" update="mensagens" />
+				</p:panelGrid>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</html>
